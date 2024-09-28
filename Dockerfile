@@ -6,6 +6,8 @@ COPY requirements.txt /app/backend
 
 RUN  pip install -r requirements.txt
 
+COPY . /app/backend
+
 #Second stage
 
 FROM python:3.9-slim
@@ -13,8 +15,7 @@ FROM python:3.9-slim
 WORKDIR /app/backend
 
 COPY --from=backend-Builder /app/backend .
-
-COPY . /app/backend
+COPY --from=backend-Builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 
 EXPOSE 8000
 
